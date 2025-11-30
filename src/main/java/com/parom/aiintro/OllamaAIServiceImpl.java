@@ -1,5 +1,7 @@
 package com.parom.aiintro;
 
+import com.parom.aiintro.model.Answer;
+import com.parom.aiintro.model.Question;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.ollama.OllamaChatModel;
@@ -18,5 +20,11 @@ public class OllamaAIServiceImpl {
         Prompt prompt = new Prompt(userPrompt);
         ChatResponse response = chatModel.call(prompt);
         return response.getResult().getOutput().getText();
+    }
+
+    public Answer getAnswer(Question question) {
+        Prompt prompt = new Prompt(question.question());
+        ChatResponse response = chatModel.call(prompt);
+        return new Answer(response.getResult().getOutput().getText());
     }
 }

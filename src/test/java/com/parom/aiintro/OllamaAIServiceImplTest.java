@@ -12,7 +12,8 @@ class OllamaAIServiceImplTest {
 
     @Test
     void generateResponse() {
-        String answer = ollamaAIService.generateResponse("What is a meaning of life?");
+        String answer = ollamaAIService.generateResponse("Write a python script to output numbers from 1 to 100");
+        System.out.println("Got the answer");
         System.out.println(answer);
     }
 }
