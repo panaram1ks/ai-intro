@@ -2,6 +2,7 @@ package com.parom.aiintro.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.parom.aiintro.model.GetCapitalRequest;
+import com.parom.aiintro.model.GetCapitalResponse;
 import com.parom.aiintro.services.OllamaAIServiceImpl;
 import com.parom.aiintro.model.Answer;
 import com.parom.aiintro.model.Question;
@@ -29,7 +30,7 @@ public class QuestionController {
     }
 
     @PostMapping("/capital")
-    public Answer askCapital(@RequestBody GetCapitalRequest getCapitalRequest) {
+    public GetCapitalResponse askCapital(@RequestBody GetCapitalRequest getCapitalRequest) {
         return ollamaAIService.getCapital(getCapitalRequest);
     }
 
