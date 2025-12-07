@@ -1,5 +1,8 @@
 package com.parom.aiintro.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.parom.aiintro.model.Answer;
 import com.parom.aiintro.model.GetCapitalRequest;
 import com.parom.aiintro.model.Question;
@@ -17,9 +20,11 @@ import java.util.Map;
 public class OllamaAIServiceImpl {
 
     private final OllamaChatModel chatModel;
+    private final ObjectMapper objectMapper;
 
-    public OllamaAIServiceImpl(OllamaChatModel chatModel) {
+    public OllamaAIServiceImpl(OllamaChatModel chatModel, ObjectMapper objectMapper) {
         this.chatModel = chatModel;
+        this.objectMapper = objectMapper;
     }
 
     @Value("classpath:templates/get-capital-prompt.st")
@@ -36,13 +41,19 @@ public class OllamaAIServiceImpl {
     }
 
     public Answer getCapital(GetCapitalRequest getCapitalRequest) {
-//        PromptTemplate promptTemplate = new PromptTemplate("what is the capital of " +getCapitalRequest.stateOrCountry() + "?" );
         PromptTemplate promptTemplate = new PromptTemplate(getCapitalPrompt);
-//        Prompt prompt = promptTemplate.create();
         Prompt prompt = promptTemplate.create(Map.of("stateOrCountry", getCapitalRequest.stateOrCountry()));
         ChatResponse response = chatModel.call(prompt);
 
-        return new Answer(response.getResult().getOutput().getText());
+        System.out.println(response.getResult().getOutput().getText());
+        String responseString;
+        try {
+            JsonNode jsonNode = objectMapper.readTree(response.getResult().getOutput().getText());
+            responseString = jsonNode.get("answer").asText();
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return new Answer(responseString);
     }
 
     public String generateResponse(String userPrompt) {

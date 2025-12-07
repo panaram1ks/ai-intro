@@ -1,9 +1,11 @@
 package com.parom.aiintro.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.parom.aiintro.model.GetCapitalRequest;
 import com.parom.aiintro.services.OllamaAIServiceImpl;
 import com.parom.aiintro.model.Answer;
 import com.parom.aiintro.model.Question;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +18,9 @@ public class QuestionController {
     public QuestionController(OllamaAIServiceImpl ollamaAIService) {
         this.ollamaAIService = ollamaAIService;
     }
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
 
     @PostMapping("/ask")
