@@ -4,6 +4,7 @@ import com.parom.aiintro.OllamaAIServiceImpl;
 import com.parom.aiintro.model.Answer;
 import com.parom.aiintro.model.Question;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -16,8 +17,8 @@ public class QuestionController {
     }
 
 
-    @PostMapping
-    public Answer askQuestion(Question question){
+    @PostMapping("/ask")
+    public Answer askQuestion(@RequestBody Question question){
         return ollamaAIService.getAnswer(question);
     }
 }

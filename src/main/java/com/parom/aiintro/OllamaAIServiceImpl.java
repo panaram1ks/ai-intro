@@ -23,6 +23,7 @@ public class OllamaAIServiceImpl {
     }
 
     public Answer getAnswer(Question question) {
+        System.out.println("I was called");
         Prompt prompt = new Prompt(question.question());
         ChatResponse response = chatModel.call(prompt);
         return new Answer(response.getResult().getOutput().getText());
