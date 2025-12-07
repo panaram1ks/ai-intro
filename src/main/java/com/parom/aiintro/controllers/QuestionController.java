@@ -1,6 +1,7 @@
 package com.parom.aiintro.controllers;
 
-import com.parom.aiintro.OllamaAIServiceImpl;
+import com.parom.aiintro.model.GetCapitalRequest;
+import com.parom.aiintro.services.OllamaAIServiceImpl;
 import com.parom.aiintro.model.Answer;
 import com.parom.aiintro.model.Question;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,12 @@ public class QuestionController {
 
 
     @PostMapping("/ask")
-    public Answer askQuestion(@RequestBody Question question){
+    public Answer askQuestion(@RequestBody Question question) {
         return ollamaAIService.getAnswer(question);
+    }
+
+    @PostMapping("/capital")
+    public Answer askCapital(@RequestBody GetCapitalRequest getCapitalRequest) {
+        return ollamaAIService.getCapital(getCapitalRequest);
     }
 }
