@@ -25,6 +25,16 @@ public class OllamaAIServiceImpl {
     @Value("classpath:templates/get-capital-prompt.st")
     private Resource getCapitalPrompt;
 
+    @Value("classpath:templates/get-capital-with-info.st")
+    private Resource getCapitalWithInfo;
+
+    public Answer getCapitalWithInfo(GetCapitalRequest getCapitalRequest) {
+        PromptTemplate promptTemplate = new PromptTemplate(getCapitalWithInfo);
+        Prompt prompt = promptTemplate.create(Map.of("stateOrCountry", getCapitalRequest.stateOrCountry()));
+        ChatResponse response = chatModel.call(prompt);
+        return new Answer(response.getResult().getOutput().getText());
+    }
+
     public Answer getCapital(GetCapitalRequest getCapitalRequest) {
 //        PromptTemplate promptTemplate = new PromptTemplate("what is the capital of " +getCapitalRequest.stateOrCountry() + "?" );
         PromptTemplate promptTemplate = new PromptTemplate(getCapitalPrompt);

@@ -27,4 +27,9 @@ public class QuestionController {
     public Answer askCapital(@RequestBody GetCapitalRequest getCapitalRequest) {
         return ollamaAIService.getCapital(getCapitalRequest);
     }
+
+    @PostMapping("/capitalWithInfo")
+    public Answer askCapitalWithInfo(@RequestBody GetCapitalRequest getCapitalRequest) {
+        return ollamaAIService.getCapitalWithInfo(getCapitalRequest);
+    }
 }
